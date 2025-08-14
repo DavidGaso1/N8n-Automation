@@ -59,15 +59,6 @@ Smart email triage that extracts, summarizes, and forwards key points to Telegra
 * Email parsing from Gmail or other providers.
 * Concise AI summarization + follow-up task suggestions.
 * Formatted Telegram output with HTML styling and emojis.
-  **Prerequisites:**
-* n8n credentials for Google Gemini and Telegram APIs.
-* Email trigger providing incoming message content.
-
-### AI Manager
-
-Daily AI-powered team assistant that prioritizes tasks and sends motivational messages.
-**Features:**
-
 * Automated daily execution via Schedule Trigger.
 * Task aggregation sorted by urgency.
 * Motivational morning recap with AI-generated "food for thought".
@@ -75,6 +66,8 @@ Daily AI-powered team assistant that prioritizes tasks and sends motivational me
   **Prerequisites:**
 * n8n credentials for Google Gemini and Telegram APIs.
 * Access to a task data source for incomplete item queries.
+* Email trigger providing incoming message content.
+
 
 ---
 
