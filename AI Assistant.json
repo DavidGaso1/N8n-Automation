@@ -4,17 +4,17 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=#### INSTRUCTIONS\nExtract the content from the following HTML\n\n##### DATA\n {{ $json.html }}",
+        "text": "=#### INSTRUCTIONS\nExtract the content from the following HTML\n\n##### DATA\n {{ $json.textAsHtml }}",
         "hasOutputParser": true,
         "batching": {}
       },
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.7,
       "position": [
-        -1024,
-        -3312
+        -976,
+        -288
       ],
-      "id": "b0821677-13c9-400b-bfbc-76f96100184f",
+      "id": "7922e413-07b4-48ce-b062-14c343cc4fa7",
       "name": "Basic LLM Chain"
     },
     {
@@ -24,17 +24,11 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -1040,
-        -2944
+        -992,
+        80
       ],
-      "id": "d14eeea7-e6bd-4c32-bef9-e3fa973f10ad",
-      "name": "Google Gemini Chat Model",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "SqJ43awYgO5zo9p6",
-          "name": "Google Gemini(PaLM) Api account"
-        }
-      }
+      "id": "a6e8bee4-5837-402f-bded-b698619c66ea",
+      "name": "Google Gemini Chat Model"
     },
     {
       "parameters": {
@@ -43,10 +37,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.2,
       "position": [
-        -864,
-        -2976
+        -816,
+        64
       ],
-      "id": "6c5ef690-3b5f-49e0-9740-e78bd360dd9c",
+      "id": "858dbd3e-ab85-4e98-b751-50e25a77dde3",
       "name": "Structured Output Parser"
     },
     {
@@ -59,10 +53,10 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.7,
       "position": [
-        -480,
-        -3312
+        -432,
+        -288
       ],
-      "id": "446675d2-4ca1-4258-8c5d-2df69278cd72",
+      "id": "7de8e14d-4b6c-4658-8e0c-ac3ba3c1b4d4",
       "name": "Basic LLM Chain 2"
     },
     {
@@ -72,19 +66,19 @@
             {
               "id": "71876e29-d823-47b6-8d6c-568a9b5bbb34",
               "name": "=data.content",
-              "value": "={{ $json.output.content }}",
+              "value": "={{ $('Get a message').item.json.snippet }}",
               "type": "string"
             },
             {
               "id": "db73dc63-d80b-4f19-aaca-440e20ea5637",
               "name": "data.from.address",
-              "value": "={{ $('Get a message').item.json.from.value[0].address }}",
+              "value": "={{ $('Gmail Trigger').item.json.From }}",
               "type": "string"
             },
             {
               "id": "2ea68682-cf05-43cb-ada4-4040220a1b8a",
-              "name": "data.from.subject",
-              "value": "={{ $('Get a message').item.json.headers.subject }}",
+              "name": "data.from..name",
+              "value": "={{ $('Get a message').item.json.labels[1].name }}",
               "type": "string"
             }
           ]
@@ -94,10 +88,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -704,
-        -3312
+        -656,
+        -288
       ],
-      "id": "e7ba7c06-8aba-429b-8de6-30ad400db62c",
+      "id": "c77b8f7c-5c39-46e0-bc34-00ef981b5e4a",
       "name": "Edit Fields"
     },
     {
@@ -107,17 +101,11 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -480,
-        -2976
+        -432,
+        64
       ],
-      "id": "cb4184a7-3016-4539-9955-91d4055bf67e",
-      "name": "Google Gemini Chat Model1",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "SqJ43awYgO5zo9p6",
-          "name": "Google Gemini(PaLM) Api account"
-        }
-      }
+      "id": "ee567a4f-1e61-4e24-bab9-36570af3d82b",
+      "name": "Google Gemini Chat Model1"
     },
     {
       "parameters": {
@@ -126,10 +114,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.2,
       "position": [
-        -304,
-        -2912
+        -256,
+        112
       ],
-      "id": "253ec4d5-8bb6-454e-aed7-d5343afebadd",
+      "id": "8547fff4-90d1-49f4-837b-75011586ed86",
       "name": "Structured Output Parser1"
     },
     {
@@ -139,11 +127,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1424,
-        -3376
+        -1376,
+        -352
       ],
       "typeVersion": 1,
-      "id": "af2b50c5-3ce5-4969-bfc5-3b7bd9387f98",
+      "id": "8157a300-45f7-41fb-aec2-4ab3b2350da4",
       "name": "Sticky Note2"
     },
     {
@@ -155,11 +143,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1072,
-        -3104
+        -1024,
+        -96
       ],
       "typeVersion": 1,
-      "id": "0b66996b-9a1b-4b65-a215-477c0e4e8013",
+      "id": "989fa75f-088c-4d07-85ad-3a42e1f84b73",
       "name": "Sticky Note3"
     },
     {
@@ -171,11 +159,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -576,
-        -3136
+        -528,
+        -112
       ],
       "typeVersion": 1,
-      "id": "870c95d8-e7f7-4cf1-af97-6642a5614a9f",
+      "id": "ec6430c8-ae9f-4bf6-9e5e-82a88d06407e",
       "name": "Sticky Note4"
     },
     {
@@ -187,35 +175,27 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -96,
-        -3392
+        -48,
+        -368
       ],
       "typeVersion": 1,
-      "id": "3d1b9d7f-e29e-40b2-ab46-d3f0460c48e8",
+      "id": "d8061c96-70cf-44a0-9cf2-d605135a3ee8",
       "name": "Sticky Note5"
     },
     {
       "parameters": {
         "operation": "get",
-        "messageId": "={{ $json.id }}",
-        "simple": false,
-        "options": {}
+        "messageId": "={{ $json.id }}"
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        -1152,
-        -3312
+        -1104,
+        -288
       ],
-      "id": "926a425b-5e9b-46bf-95b5-b702434f52d3",
+      "id": "082d6e2c-5f87-4a26-b483-a3c4997d12b6",
       "name": "Get a message",
-      "webhookId": "a2059580-3971-4f46-b594-12e8b08b3b70",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "DZCYUAPCO1AnajlE",
-          "name": "Gmail account "
-        }
-      }
+      "webhookId": "a2059580-3971-4f46-b594-12e8b08b3b70"
     },
     {
       "parameters": {
@@ -229,18 +209,12 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -80,
-        -3312
+        -32,
+        -288
       ],
-      "id": "f1697d54-25ca-4dbe-a0b4-caf7cd34c945",
+      "id": "6b93edbf-290b-4d53-bd95-ed92807d9b9c",
       "name": "Send a text message",
-      "webhookId": "d291273b-7742-476a-863f-ad2ce0f7feb0",
-      "credentials": {
-        "telegramApi": {
-          "id": "tOy7ib2DpzhLNTTe",
-          "name": "Telegram account"
-        }
-      }
+      "webhookId": "d291273b-7742-476a-863f-ad2ce0f7feb0"
     },
     {
       "parameters": {
@@ -251,24 +225,16 @@
             }
           ]
         },
-        "simple": false,
-        "filters": {},
-        "options": {}
+        "filters": {}
       },
       "type": "n8n-nodes-base.gmailTrigger",
       "typeVersion": 1.2,
       "position": [
-        -1312,
-        -3328
+        -1264,
+        -304
       ],
-      "id": "66c1ff83-83d9-404b-b732-9a98f36e7ac3",
-      "name": "Gmail Trigger",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "DZCYUAPCO1AnajlE",
-          "name": "Gmail account "
-        }
-      }
+      "id": "fadbd2f2-d967-421b-8777-18a319f4d95c",
+      "name": "Gmail Trigger"
     },
     {
       "parameters": {
@@ -283,10 +249,10 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -3104,
-        -2128
+        -3056,
+        896
       ],
-      "id": "31dcd29a-ec41-4ac4-a1ec-67752e97e0a3",
+      "id": "bc775352-9aee-497c-93b6-a223d2382212",
       "name": "Schedule Trigger [24H]"
     },
     {
@@ -299,10 +265,10 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.7,
       "position": [
-        -2320,
-        -2128
+        -2272,
+        896
       ],
-      "id": "263569e2-a8c9-4fcf-b0c2-bb8d1dce394e",
+      "id": "6720d3fd-231a-46ab-8d26-cc969d7eed20",
       "name": "Basic LLM Chain2"
     },
     {
@@ -312,17 +278,11 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -2352,
-        -1984
+        -2304,
+        1040
       ],
-      "id": "a825fc0a-13d3-4046-942e-fff9daf3ef9c",
-      "name": "Google Gemini Chat Model5",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "SqJ43awYgO5zo9p6",
-          "name": "Google Gemini(PaLM) Api account"
-        }
-      }
+      "id": "8bffb714-eca0-4a9e-a7e5-69c00d19b422",
+      "name": "Google Gemini Chat Model5"
     },
     {
       "parameters": {
@@ -331,10 +291,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.2,
       "position": [
-        -2192,
-        -1984
+        -2144,
+        1040
       ],
-      "id": "d995b2d3-8cfc-4166-b3b8-919dfa511994",
+      "id": "1248cf3a-1f3e-4647-8dc6-4743f3e0c3de",
       "name": "Structured Output Parser5"
     },
     {
@@ -364,18 +324,6 @@
               "name": "task.due",
               "value": "={{ $json.due }}",
               "type": "string"
-            },
-            {
-              "id": "60b2af5c-5a5d-47e4-917b-39524e36dd9f",
-              "name": "task.links",
-              "value": "={{ $json.links }}",
-              "type": "string"
-            },
-            {
-              "id": "4a75fea4-d25d-4ac5-852b-deb1f2275298",
-              "name": "task.ID",
-              "value": "={{ $json.id }}",
-              "type": "string"
             }
           ]
         },
@@ -384,10 +332,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -2704,
-        -2128
+        -2656,
+        896
       ],
-      "id": "7c8e94da-6e6b-4240-8b1c-3b1c2b9fa436",
+      "id": "4e4ab7a5-a68e-4138-b7eb-4b13bcd89c83",
       "name": "Edit Fields "
     },
     {
@@ -406,10 +354,10 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        -2560,
-        -2128
+        -2512,
+        896
       ],
-      "id": "10fdd284-a7a4-44c1-81f1-42b471f87746",
+      "id": "467dbbf8-6416-4a18-9e63-c5d9969a3acc",
       "name": "Aggregate 3"
     },
     {
@@ -424,18 +372,31 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -1984,
-        -2128
+        -1936,
+        896
       ],
-      "id": "04ab613c-64e8-4e78-b5e3-4bd5eb348adf",
+      "id": "9cab62c1-e281-430b-ad3f-85d5fa18ec32",
       "name": "Telegram 1",
-      "webhookId": "aa9a10bd-eeae-41d9-8da3-a3687b4a2eb2",
-      "credentials": {
-        "telegramApi": {
-          "id": "tOy7ib2DpzhLNTTe",
-          "name": "Telegram account"
+      "webhookId": "aa9a10bd-eeae-41d9-8da3-a3687b4a2eb2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ JSON.stringify($json.userMessage) }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=##### INSTRUCTIONS\nYou are Automate Community Pro Telegram assistant Chatbot. You will communicating directly with the company team via Telegram Messages.\n\nYou have access to different tools which let you perform the following operations:\n- Create/Update tasks\n- Read/Write & Send Emails\n- Get scheduled events from calendar\n- Access Company's Knowledge Base Vector Store for contextual information retrevial\n- Download file from company's Google Drive\n\nIMPORTANT:\n- When retrieving data from the vector storage, you will be receive back also with the metadata of each specific piece of data retrieved. This metadata will include a field called \"document_id\" which represent the document_id to which the retrieved piece of data belongs. This is a google drive file ID, when you retrieve data from the vector storage YOU MUST ALWAYS retrieve the full documents to which the retrieved pieces of text belongs. This way you will have a more cohmprehensive context available. NEVER RETRIEVE DATA FROM THE VECTOR STORAGE AND THEN NOT DOWNLOADING THE RIGHT DOCUMENT FROM GOOGLE DRIVE, NEVER DO THAT.\n\nYour task now is to act as an helpful internal company assistant based on user requests.\n\nYou will receive a message from the user as input and yyour goal is to:\n- execute the required action using tools based on the message content (might not be necessary to always perform an operation)\n- create a final message response to send to the user\n\nThe final output message will be sent via Telegram and MUST be formatted following the specific Telegram's HTML standards described here:\n\"\"\"DOCS\nTo use this mode, pass HTML in the parse_mode field. The following tags are currently supported:\n```\n<b>bold</b>, <strong>bold</strong>\n<i>italic</i>, <em>italic</em>\n<u>underline</u>, <ins>underline</ins>\n<s>strikethrough</s>, <strike>strikethrough</strike>, <del>strikethrough</del>\n<span class=\"tg-spoiler\">spoiler</span>, <tg-spoiler>spoiler</tg-spoiler>\n<b>bold <i>italic bold <s>italic bold strikethrough <span class=\"tg-spoiler\">italic bold strikethrough spoiler</span></s> <u>underline italic bold</u></i> bold</b>\n<a href=\"http://www.example.com/\">inline URL</a>\n<a href=\"tg://user?id=123456789\">inline mention of a user</a>\n<tg-emoji emoji-id=\"5368324170671202286\">👍</tg-emoji>\n<code>inline fixed-width code</code>\n<pre>pre-formatted fixed-width code block</pre>\n<pre><code class=\"language-python\">pre-formatted fixed-width code block written in the Python programming language</code></pre>\n<blockquote>Block quotation started\\nBlock quotation continued\\nThe last line of the block quotation</blockquote>\n<blockquote expandable>Expandable block quotation started\\nExpandable block quotation continued\\nExpandable block quotation continued\\nHidden by default part of the block quotation started\\nExpandable block quotation continued\\nThe last line of the block quotation</blockquote>\n```\n\nPlease Note:\n- Only the tags mentioned above are currently supported.\n- All <, > and & symbols that are not a part of a tag or an HTML entity must be replaced with the corresponding HTML entities (< with &lt;, > with &gt; and & with &amp;).\n- All numerical HTML entities are supported.\n- The API currently supports only the following named HTML entities: &lt;, &gt;, &amp; and &quot;.\n- Use nested pre and code tags, to define programming language for pre entity.\n- Programming language can't be specified for standalone code tags.\n- A valid emoji must be used as the content of the tg-emoji tag. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the emoji field of the custom emoji sticker.\n\"\"\"\n\nYou will be provided the user input message in the following format:\n```json\n{\n \"userMessage\": {\n       \"username\": \"username here\",\n       \"firstName\": \"user first Name if provided\",\n       \"content\": \"message content\"\n }\n}\n```\n\nAdditional Context\nCurrent Date {{ $now.format('yyyy-MM-dd') }}\nYour gender is Female"
         }
-      }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -2352,
+        -288
+      ],
+      "id": "bff0c916-b03d-4bd3-ad92-878a6da26eb1",
+      "name": "AI Agent1",
+      "retryOnFail": false
     },
     {
       "parameters": {
@@ -445,10 +406,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -2752,
-        -3184
+        -2704,
+        -176
       ],
-      "id": "1fa38e7a-9299-4dd3-bb50-8bbfacb5ef75",
+      "id": "0e2689c7-464d-4fbf-bc0f-e9ac63cd7892",
       "name": "Google Gemini Chat Model6"
     },
     {
@@ -460,10 +421,10 @@
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
       "typeVersion": 1.3,
       "position": [
-        -2624,
-        -3184
+        -2576,
+        -176
       ],
-      "id": "146ace6a-0028-43f1-8aeb-642cf73c7ce1",
+      "id": "1d8d6b3b-23ca-4824-945c-ad6885ca1baf",
       "name": "Postgres Chat Memory"
     },
     {
@@ -485,10 +446,10 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
       "typeVersion": 1.1,
       "position": [
-        -2992,
-        -2784
+        -2944,
+        240
       ],
-      "id": "301bf215-e69c-47ac-8829-20b8f91dd59f",
+      "id": "4d1f450f-3a56-44b0-aec6-141000d081da",
       "name": "Supabase Vector Store1"
     },
     {
@@ -499,10 +460,10 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -2496,
-        -3184
+        -2448,
+        -176
       ],
-      "id": "f7ea8d21-ef33-428c-acca-2acecac976d9",
+      "id": "a8bad80a-bc85-4ffa-a096-c4ec7954db0c",
       "name": "Embeddings OpenAI1"
     },
     {
@@ -510,10 +471,10 @@
       "type": "@n8n/n8n-nodes-langchain.toolCalculator",
       "typeVersion": 1,
       "position": [
-        -2224,
-        -2608
+        -2176,
+        416
       ],
-      "id": "ee8c0ce0-0fb7-449e-a6c6-2f84df286dd2",
+      "id": "534f5b1d-e83d-41be-ab7b-c0a39121edb7",
       "name": "Calculator"
     },
     {
@@ -533,10 +494,10 @@
       "type": "n8n-nodes-base.googleCalendarTool",
       "typeVersion": 1.3,
       "position": [
-        -2096,
-        -2608
+        -2048,
+        416
       ],
-      "id": "bc044bba-d5e5-46e9-bc2f-e732347520ad",
+      "id": "fe0531d2-6a32-4aeb-a370-fc954640fbd4",
       "name": "Google Calendar"
     },
     {
@@ -568,10 +529,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -2960,
-        -3312
+        -2912,
+        -288
       ],
-      "id": "6c79bc3d-c4d3-41c5-b066-94710e2c9231",
+      "id": "0667b289-fc0f-424c-8093-4ea4c1efbbb3",
       "name": "Edit Fields1"
     },
     {
@@ -586,10 +547,10 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -2064,
-        -3312
+        -2016,
+        -288
       ],
-      "id": "5cd7a7aa-d620-46a7-9b32-69de81bd86d9",
+      "id": "81156376-74eb-4e91-9bc5-6825bcd828bf",
       "name": "Telegram1",
       "webhookId": "92e0da79-e925-483c-9099-a4fc2b0052ec"
     },
@@ -601,10 +562,10 @@
       "type": "@n8n/n8n-nodes-langchain.toolCode",
       "typeVersion": 1.2,
       "position": [
-        -1984,
-        -2608
+        -1936,
+        416
       ],
-      "id": "47b840ff-719a-4ae2-ab92-ba6e3f287d5a",
+      "id": "a7c59266-8e67-4b12-aa0c-72189bd3ba00",
       "name": "Code Tool"
     },
     {
@@ -615,10 +576,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.2,
       "position": [
-        -1680,
-        -2912
+        -1632,
+        112
       ],
-      "id": "c557b43d-e44b-47cb-bbeb-814b489bfe87",
+      "id": "26c44478-5f35-445e-a0ec-bebaa6242c00",
       "name": "Structured Output Parser6"
     },
     {
@@ -628,10 +589,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserAutofixing",
       "typeVersion": 1,
       "position": [
-        -1984,
-        -3072
+        -1936,
+        -48
       ],
-      "id": "4c209e58-afab-46b2-915b-f5f80bfe6bbf",
+      "id": "2db957d9-56bc-4238-9e6f-9a653d89fee4",
       "name": "Auto-fixing Output Parser"
     },
     {
@@ -642,10 +603,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -1840,
-        -2912
+        -1792,
+        112
       ],
-      "id": "940ca50a-8aa4-4394-936f-a7ede2ce6b54",
+      "id": "8ef1ae75-c779-4197-8c95-497217f5c2dc",
       "name": "Google Gemini Chat Model7"
     },
     {
@@ -657,11 +618,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -3184,
-        -3392
+        -3136,
+        -368
       ],
       "typeVersion": 1,
-      "id": "76307212-5094-4105-a083-e8f1afe81942",
+      "id": "a77fda8f-7e56-4371-82f2-6f40eff2e3a1",
       "name": "Sticky Note6"
     },
     {
@@ -673,11 +634,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2464,
-        -3392
+        -2416,
+        -368
       ],
       "typeVersion": 1,
-      "id": "76e5b099-071d-4aaf-87f6-5d9a3dd4c0dd",
+      "id": "d2dce2d4-b210-4dcf-9c2a-06e17fb12d74",
       "name": "Sticky Note7"
     },
     {
@@ -689,12 +650,27 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2096,
-        -3392
+        -2048,
+        -368
       ],
       "typeVersion": 1,
-      "id": "5b1804c8-5a7e-4f19-8ce0-19299d7cb887",
+      "id": "43377048-222a-4ff1-bfc5-c0926b56b436",
       "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "## Tool Suite\n- Google Tasks\n- Gmail\n- Google Drive\n- Google Calendar",
+        "width": 290,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1488,
+        16
+      ],
+      "typeVersion": 1,
+      "id": "d7f47efc-78e5-4cf0-a271-db251bf39a94",
+      "name": "Sticky Note9"
     },
     {
       "parameters": {
@@ -705,11 +681,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -3184,
-        -2208
+        -3136,
+        816
       ],
       "typeVersion": 1,
-      "id": "67fa6d65-0003-4ad5-89f8-7717c7600a70",
+      "id": "846731d6-fe67-4ee1-8e5d-a0d132c36228",
       "name": "Sticky Note18"
     },
     {
@@ -720,11 +696,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2832,
-        -2192
+        -2784,
+        832
       ],
       "typeVersion": 1,
-      "id": "2a2b2e52-960f-496f-af9a-ee3425e30e2f",
+      "id": "b5a408bc-f525-48e4-a842-fe3f746a7fc2",
       "name": "Sticky Note19"
     },
     {
@@ -736,11 +712,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2400,
-        -2192
+        -2352,
+        832
       ],
       "typeVersion": 1,
-      "id": "6b9d734b-a2e2-4414-9422-2454521b648a",
+      "id": "c048e53f-5e00-49ed-ab1b-9a056e9cf1de",
       "name": "Sticky Note20"
     },
     {
@@ -755,10 +731,10 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
       "position": [
-        -3136,
-        -3312
+        -3088,
+        -288
       ],
-      "id": "f93db65e-50bf-485a-87f1-3b392b9af550",
+      "id": "59163234-48fb-4649-97d3-faecf95feec8",
       "name": "Telegram Trigger",
       "webhookId": "7a0e571b-9b2d-4aa1-b989-f18c0ca0313c"
     },
@@ -774,10 +750,10 @@
       "type": "n8n-nodes-base.gmailTool",
       "typeVersion": 2.1,
       "position": [
-        -2672,
-        -2736
+        -2624,
+        304
       ],
-      "id": "7f960eb0-e2a1-41be-85c4-9c5cea260c02",
+      "id": "f7505be7-c50e-40f0-9b39-22436f44a358",
       "name": "Send a message in Gmail",
       "webhookId": "a2f8dc5c-51b3-42c9-9b7a-eae9b7d55dc3"
     },
@@ -804,10 +780,10 @@
       "type": "n8n-nodes-base.googleDriveTool",
       "typeVersion": 3,
       "position": [
-        -2352,
-        -2784
+        -2304,
+        240
       ],
-      "id": "d27c130e-a27e-48f7-acbd-5450584f34ba",
+      "id": "2c7cd973-92f9-4ee9-b712-d9c490e933dd",
       "name": "Download file in Google Drive"
     },
     {
@@ -821,10 +797,10 @@
       "type": "n8n-nodes-base.gmailTool",
       "typeVersion": 2.1,
       "position": [
-        -2096,
-        -2912
+        -2048,
+        112
       ],
-      "id": "9f373353-c1c4-40ca-8834-849b8b515577",
+      "id": "ed415e38-cd91-4179-9001-83ee00e26640",
       "name": "Get many messages in Gmail",
       "webhookId": "6241ddd3-b237-4f48-8a6d-e0303e3008a1"
     },
@@ -840,10 +816,10 @@
       "type": "n8n-nodes-base.googleTasksTool",
       "typeVersion": 1,
       "position": [
-        -2560,
-        -2736
+        -2512,
+        304
       ],
-      "id": "ef0af79c-e943-454e-913a-9b6147d3e8cd",
+      "id": "517a1be8-92b9-476c-92db-f831885c2070",
       "name": "Create a task in Google Tasks"
     },
     {
@@ -862,10 +838,10 @@
       "type": "n8n-nodes-base.googleTasksTool",
       "typeVersion": 1,
       "position": [
-        -1984,
-        -2768
+        -1936,
+        256
       ],
-      "id": "aa718877-8e68-4977-a732-c5828d3441ca",
+      "id": "7884060a-6197-414f-a2fc-55faa38649d6",
       "name": "Update a task in Google Tasks1"
     },
     {
@@ -880,17 +856,11 @@
       "type": "n8n-nodes-base.googleTasks",
       "typeVersion": 1,
       "position": [
-        -2816,
-        -2128
+        -2768,
+        896
       ],
-      "id": "a770f406-13de-4c7d-8283-749fb217914a",
-      "name": "Get many tasks",
-      "credentials": {
-        "googleTasksOAuth2Api": {
-          "id": "nLsINibs4XdYUNaw",
-          "name": "Google Tasks account"
-        }
-      }
+      "id": "fb058bbe-6b1e-40be-8f85-3e9879ddd70e",
+      "name": "Get many tasks"
     },
     {
       "parameters": {
@@ -902,10 +872,10 @@
       "type": "n8n-nodes-base.googleTasksTool",
       "typeVersion": 1,
       "position": [
-        -2464,
-        -2608
+        -2416,
+        416
       ],
-      "id": "74e9da44-298c-4853-bbf6-de24d06324a0",
+      "id": "8a62a5dd-5924-4e1a-9238-7ccc7dcfd3f9",
       "name": "Get many tasks in Google Tasks"
     },
     {
@@ -917,10 +887,10 @@
       "type": "n8n-nodes-base.googleTasksTool",
       "typeVersion": 1,
       "position": [
-        -2144,
-        -2768
+        -2096,
+        256
       ],
-      "id": "38706d41-405b-4b79-92a5-890abf84463c",
+      "id": "7552ff4d-c45d-480e-a620-62d676de2c14",
       "name": "Get a task in Google Tasks"
     },
     {
@@ -932,30 +902,842 @@
       "type": "n8n-nodes-base.googleTasksTool",
       "typeVersion": 1,
       "position": [
-        -2352,
-        -2496
+        -2304,
+        544
       ],
-      "id": "21ce400a-96e4-44e6-9d9c-aa1ba48c3a2f",
+      "id": "1ba1f3fe-e916-455b-a5bd-f40dfcdad1ec",
       "name": "Delete a task in Google Tasks"
     },
     {
       "parameters": {
-        "promptType": "define",
-        "text": "={{ JSON.stringify($json.userMessage) }}",
-        "hasOutputParser": true,
-        "options": {
-          "systemMessage": "=##### INSTRUCTIONS\nYou are Automate Community Pro Telegram assistant Chatbot. You will communicating directly with the company team via Telegram Messages.\n\nYou have access to different tools which let you perform the following operations:\n- Create/Update tasks\n- Read/Write & Send Emails\n- Get scheduled events from calendar\n- Access Company's Knowledge Base Vector Store for contextual information retrevial\n- Download file from company's Google Drive\n\nIMPORTANT:\n- When retrieving data from the vector storage, you will be receive back also with the metadata of each specific piece of data retrieved. This metadata will include a field called \"document_id\" which represent the document_id to which the retrieved piece of data belongs. This is a google drive file ID, when you retrieve data from the vector storage YOU MUST ALWAYS retrieve the full documents to which the retrieved pieces of text belongs. This way you will have a more cohmprehensive context available. NEVER RETRIEVE DATA FROM THE VECTOR STORAGE AND THEN NOT DOWNLOADING THE RIGHT DOCUMENT FROM GOOGLE DRIVE, NEVER DO THAT.\n\nYour task now is to act as an helpful internal company assistant based on user requests.\n\nYou will receive a message from the user as input and yyour goal is to:\n- execute the required action using tools based on the message content (might not be necessary to always perform an operation)\n- create a final message response to send to the user\n\nThe final output message will be sent via Telegram and MUST be formatted following the specific Telegram's HTML standards described here:\n\"\"\"DOCS\nTo use this mode, pass HTML in the parse_mode field. The following tags are currently supported:\n```\n<b>bold</b>, <strong>bold</strong>\n<i>italic</i>, <em>italic</em>\n<u>underline</u>, <ins>underline</ins>\n<s>strikethrough</s>, <strike>strikethrough</strike>, <del>strikethrough</del>\n<span class=\"tg-spoiler\">spoiler</span>, <tg-spoiler>spoiler</tg-spoiler>\n<b>bold <i>italic bold <s>italic bold strikethrough <span class=\"tg-spoiler\">italic bold strikethrough spoiler</span></s> <u>underline italic bold</u></i> bold</b>\n<a href=\"http://www.example.com/\">inline URL</a>\n<a href=\"tg://user?id=123456789\">inline mention of a user</a>\n<tg-emoji emoji-id=\"5368324170671202286\">👍</tg-emoji>\n<code>inline fixed-width code</code>\n<pre>pre-formatted fixed-width code block</pre>\n<pre><code class=\"language-python\">pre-formatted fixed-width code block written in the Python programming language</code></pre>\n<blockquote>Block quotation started\\nBlock quotation continued\\nThe last line of the block quotation</blockquote>\n<blockquote expandable>Expandable block quotation started\\nExpandable block quotation continued\\nExpandable block quotation continued\\nHidden by default part of the block quotation started\\nExpandable block quotation continued\\nThe last line of the block quotation</blockquote>\n```\n\nPlease Note:\n- Only the tags mentioned above are currently supported.\n- All <, > and & symbols that are not a part of a tag or an HTML entity must be replaced with the corresponding HTML entities (< with &lt;, > with &gt; and & with &amp;).\n- All numerical HTML entities are supported.\n- The API currently supports only the following named HTML entities: &lt;, &gt;, &amp; and &quot;.\n- Use nested pre and code tags, to define programming language for pre entity.\n- Programming language can't be specified for standalone code tags.\n- A valid emoji must be used as the content of the tg-emoji tag. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the emoji field of the custom emoji sticker.\n\"\"\"\n\nYou will be provided the user input message in the following format:\n```json\n{\n \"userMessage\": {\n       \"username\": \"username here\",\n       \"firstName\": \"user first Name if provided\",\n       \"content\": \"message content\"\n }\n}\n```\n\nAdditional Context\nCurrent Date {{ $now.format('yyyy-MM-dd') }}\nYour gender is Female"
-        }
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "condition1",
+              "leftValue": "={{ $json.From }}",
+              "rightValue": "opay",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "9a7eafa7-15c4-449f-8612-4488c9f1bb4c",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
       },
-      "type": "@n8n/n8n-nodes-langchain.agent",
+      "id": "a6508f37-73ed-4513-87c1-8fce81e8a4ca",
+      "name": "Filter Bank Messages",
+      "type": "n8n-nodes-base.if",
       "typeVersion": 2,
       "position": [
-        -2400,
-        -3312
+        -1008,
+        784
+      ]
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyWeek"
+            }
+          ]
+        },
+        "filters": {
+          "q": "transfer successful",
+          "sender": "opay"
+        }
+      },
+      "id": "57d26e32-c410-4aea-b8f9-aa95ea40f86b",
+      "name": "Gmail Trigger1",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1456,
+        752
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a banking transaction analyzer. Analyze the following banking message and extract transaction details in JSON format.\n\nMessage: {{ $json.output.content }}\n\nExtract the following information and return ONLY a valid JSON object:\n{\n  \"transactionType\": \"credit\" or \"debit\",\n  \"amount\": numeric_value_only,\n  \"currency\": \"NGN\" or detected currency,\n  \"status\": \"completed\", \"pending\", \"failed\", or \"processing\",\n  \"description\": \"brief description of transaction\",\n  \"category\": \"earnings\", \"spending\", or \"pending\",\n  \"extractedDate\": \"YYYY-MM-DD format if found in message\",\n  \"confidence\": 0.0 to 1.0 confidence score,\n  \"isTransaction\": true or false\n}\n\nRules:\n- Credit = money received (earnings)\n- Debit = money sent/spent (spending)\n- Pending = any unconfirmed transactions\n- Amount should be numeric only (no currency symbols)\n- If not a transaction, set isTransaction to false\n- Be very accurate with transaction type detection",
+        "hasOutputParser": true,
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        -32,
+        800
       ],
-      "id": "a2380501-9db8-4781-8b21-477ba8a7609f",
-      "name": "Agent D",
-      "retryOnFail": false
+      "id": "527d9b30-a7ac-4b5b-896e-190a901b928f",
+      "name": "Basic LLM Chain "
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        16,
+        1056
+      ],
+      "id": "00a41926-9376-49f8-89f9-a9b878c61d06",
+      "name": "Google Gemini Chat Model3"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "={\n \"transactionType\": \"debit\",\n \"amount\": 100.0,\n \"currency\": \"NGN\",\n \"status\": \"completed\",\n \"description\": \"Transfer to tochukwu PRECIOUS ahuruezenma (OPay account 7010724735)\",\n \"category\": \"spending\",\n \"extractedDate\": \"2025-07-13\",\n \"confidence\": 1.0,\n \"isTransaction\": true\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        304,
+        1072
+      ],
+      "id": "18133e4b-4de9-4c80-87b9-5843ad4b4399",
+      "name": "Structured Output Parser2"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -1216,
+        784
+      ],
+      "id": "bc8535cb-8fa0-47c7-93e0-c1e262656932",
+      "name": "Get many messages",
+      "webhookId": "a2059580-3971-4f46-b594-12e8b08b3b70"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "71876e29-d823-47b6-8d6c-568a9b5bbb34",
+              "name": "=data.transactiontype",
+              "value": "={{ $json.output.transactionType }}",
+              "type": "string"
+            },
+            {
+              "id": "db73dc63-d80b-4f19-aaca-440e20ea5637",
+              "name": "data.amount",
+              "value": "={{ $json.output.amount }}",
+              "type": "number"
+            },
+            {
+              "id": "253c036f-a91d-445e-992a-6e47bbafff6d",
+              "name": "=data.description",
+              "value": "={{ $json.output.description }}",
+              "type": "string"
+            },
+            {
+              "id": "ced46927-4b0d-40df-9866-0995167b9ac5",
+              "name": "data.date",
+              "value": "={{ $json.output.extractedDate }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -336,
+        784
+      ],
+      "id": "ff0e4852-a6af-4cb6-864c-a1019296119e",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a banking transaction analyzer. Analyze the following banking message and extract transaction details in JSON format.\n\nMessage: {{ $json.snippet }}\nBank: {{ $json.From }}\nDate: {{ $json.internalDate }}\n\nExtract the following information and return ONLY a valid JSON object:\n{\n  \"transactionType\": \"credit\" or \"debit\",\n  \"amount\": numeric_value_only,\n  \"currency\": \"NGN\" or detected currency,\n  \"status\": \"completed\", \"pending\", \"failed\", or \"processing\",\n  \"description\": \"brief description of transaction\",\n  \"category\": \"earnings\", \"spending\", or \"pending\",\n  \"extractedDate\": \"YYYY-MM-DD format if found in message\",\n  \"confidence\": 0.0 to 1.0 confidence score,\n  \"isTransaction\": true or false\n}\n\nRules:\n- Credit = money received (earnings)\n- Debit = money sent/spent (spending)\n- Pending = any unconfirmed transactions\n- Amount should be numeric only (no currency symbols)\n- If not a transaction, set isTransaction to false\n- Be very accurate with transaction type detection",
+        "hasOutputParser": true,
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        -688,
+        800
+      ],
+      "id": "42f528ed-67fb-47a9-ab31-be605dfd9757",
+      "name": "Basic LLM Chain 3"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -768,
+        1040
+      ],
+      "id": "d7ae347a-dacc-4827-9809-e5397965861d",
+      "name": "Google Gemini Chat Model8"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n    \"content\": \"put extracted content here...\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        -528,
+        1040
+      ],
+      "id": "30260f2a-8496-4d24-9747-1e64be91e580",
+      "name": "Structured Output Parser4"
+    },
+    {
+      "parameters": {
+        "chatId": "1026132948",
+        "text": "=💰 Transaction Alert\n\n🔄 Type: {{ $json.output.transactionType }}\n💵 Amount: {{ $json.output.currency }} {{ $json.output.amount }}\n📝 Description: {{ $json.output.description }}\n📅 Date: {{ $json.output.extractedDate }}\n✅ Status: {{ $json.output.status }}\n📊 Category: {{ $json.output.category }}\n🎯 Confidence: {{ Math.round($json.output.confidence * 100) }}%",
+        "replyMarkup": "forceReply",
+        "forceReply": {},
+        "additionalFields": {
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        384,
+        816
+      ],
+      "id": "f42c48d0-44ce-44e0-af28-6a45bff45304",
+      "name": "Send a text message1",
+      "webhookId": "55d7eaf5-8f23-4d06-8490-f40dd7b8566b"
+    },
+    {
+      "parameters": {
+        "content": "## Transaction Alerts ",
+        "height": 260
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1504,
+        672
+      ],
+      "typeVersion": 1,
+      "id": "1689f66e-6120-47aa-b97a-7e9516f5bfec",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "condition1",
+              "leftValue": "={{ $json.output?.isTransaction }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "boolean",
+                "operation": "equal"
+              }
+            },
+            {
+              "id": "condition2",
+              "leftValue": "=",
+              "rightValue": 100,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            },
+            {
+              "id": "a5fa15dc-da18-45af-a21e-b4fbfc1d327d",
+              "leftValue": "={{ $json.output.status }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "aaa0ac90-dd09-4aea-84ca-bff38640c72b",
+      "name": "Filter Valid Transactions1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        592,
+        896
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "## 🧱 Workflow Highlights (Step Summary)\n- **Trigger: Gmail (filters by sender & keyword).**\n\n- **Filter: Check if message is from \"Opay\".**\n\n- **AI Parsing: Use Google Gemini (via LangChain Chain).**\n\n- **Transaction Filter: Pass only credit or debit types.**\n\n- **Logging: Save to Google Sheet (Transactions sheet).**\n\n- **Telegram Notification: Alert on new transaction.**\n\n- **Error Trigger: Catches any failure in the flow.**\n\n- **Weekly Cron Trigger: Aggregates totals and sends Telegram financial report.**",
+        "height": 620,
+        "width": 900
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -976,
+        1312
+      ],
+      "typeVersion": 1,
+      "id": "e75ccb5d-6e6f-4432-9547-aabbc0c87555",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "54300a2b-12fc-45b4-a3c3-72f0f4e71ab7",
+              "name": "output.description",
+              "value": "={{ $json.output.description }}",
+              "type": "string"
+            },
+            {
+              "id": "fc5d3e8e-1ab4-4129-8f92-8117bf121704",
+              "name": "output.amount",
+              "value": "={{ $json.output.amount }}",
+              "type": "string"
+            },
+            {
+              "id": "fbb080a3-3fc4-407d-b83c-118b1f104c08",
+              "name": "output.currency",
+              "value": "={{ $json.output.currency }}",
+              "type": "string"
+            },
+            {
+              "id": "ac8ea97e-d71c-400d-8f91-75fb8f2f46c3",
+              "name": "output.transactionType",
+              "value": "={{ $json.output.transactionType }}",
+              "type": "string"
+            },
+            {
+              "id": "f7574839-8ff2-441e-8c49-bc49ccabeac2",
+              "name": "output.extractedDate",
+              "value": "={{ $json.output.extractedDate }}",
+              "type": "string"
+            },
+            {
+              "id": "bdaa7cb5-e9e6-4dda-9c3a-0deeb51a8ad9",
+              "name": "output.transferredTo",
+              "value": "={{ $json.output.transferredTo }}",
+              "type": "string"
+            },
+            {
+              "id": "8142da38-f206-4dad-93ea-8c617d603c44",
+              "name": "output.transactionId",
+              "value": "={{ $json.output.transactionId }}",
+              "type": "string"
+            },
+            {
+              "id": "034e3bee-c765-4bdf-b79d-b179b20f2904",
+              "name": "output.isTransaction",
+              "value": "={{ $json.output.isTransaction }}",
+              "type": "string"
+            },
+            {
+              "id": "c5061e6d-295d-4c9c-aa09-ce5000c9777b",
+              "name": "output.confidence",
+              "value": "={{ $json.output.confidence }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -832,
+        1744
+      ],
+      "id": "a44d91c0-bba3-4ae5-b4a9-9b46fe29d65f",
+      "name": "Format Transaction Data"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1168,
+        2016
+      ],
+      "id": "5ad48c4d-d885-4d18-a6d4-aa8132072745",
+      "name": "Google Gemini Chat Model 2"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"transactionType\": \"credit or debit\",\n  \"amount\": \"numeric_value_only\",\n  \"currency\": \"NGN or detected currency\",\n  \"status\": \"completed, pending, failed, or processing\",\n  \"description\": \"brief description of transaction\",\n  \"category\": \"earnings, spending, or pending\",\n  \"extractedDate\": \"YYYY-MM-DD format if found in message\",\n  \"confidence\": \"0.0 to 1.0 confidence score\",\n  \"isTransaction\": \"true or false\",\n  \"transactionId\": \"transaction identifier if available\",\n  \"transferredTo\": \"recipient account number or identifier if applicable\"\n}",
+        "autoFix": true,
+        "customizeRetryPrompt": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        -992,
+        2064
+      ],
+      "id": "f82e88a1-e56c-4258-b833-deb9a4060754",
+      "name": "Content Parser"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        -2000,
+        1376
+      ],
+      "id": "75184090-b502-44a9-8fd5-3c7f46470112",
+      "name": "Weekly Report Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1CfREeD91_aTdVfjxxwoHJMfIxGuohdTU454k86paML4",
+          "mode": "list",
+          "cachedResultName": "TRans Analy",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CfREeD91_aTdVfjxxwoHJMfIxGuohdTU454k86paML4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Transactions",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CfREeD91_aTdVfjxxwoHJMfIxGuohdTU454k86paML4/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.4,
+      "position": [
+        -1808,
+        1376
+      ],
+      "id": "4b8501c1-5825-4ab2-8eb3-d4af721651ec",
+      "name": "Get Weekly Transactions"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Calculate weekly financial summary\nconst transactions = $input.all();\nlet totalCredit = 0;\nlet totalDebit = 0;\nlet creditCount = 0;\nlet debitCount = 0;\nconst categories = {};\n\ntransactions.forEach(transaction => {\n  const data = transaction.json || transaction;\n  \n  // Parse amount - remove any currency symbols and convert to number\n  const amountStr = data.Amount || data.amount || \"0\";\n  const amount = parseFloat(amountStr.toString().replace(/[^\\d.-]/g, '')) || 0;\n  \n  // Get transaction type\n  const type = (data[\"Transaction Type\"] || data.transactionType || \"\").toLowerCase();\n  \n  // Get category\n  const category = data.Category || data.category || 'Unknown';\n  \n  // Process based on transaction type\n  if (type === 'credit' || type.includes('credit')) {\n    totalCredit += amount;\n    creditCount++;\n  } else if (type === 'debit' || type.includes('debit')) {\n    totalDebit += amount;\n    debitCount++;\n  }\n  \n  // Category breakdown\n  if (!categories[category]) {\n    categories[category] = { amount: 0, count: 0 };\n  }\n  categories[category].amount += amount;\n  categories[category].count++;\n});\n\nconst netFlow = totalCredit - totalDebit;\nconst weekStart = new Date();\nweekStart.setDate(weekStart.getDate() - 7);\n\n// Return in the exact format requested\nreturn {\n  weekStart: weekStart.toISOString().split('T')[0],\n  weekEnd: new Date().toISOString().split('T')[0],\n  totalCredit,\n  totalDebit,\n  netFlow,\n  creditCount,\n  debitCount,\n  totalTransactions: creditCount + debitCount,\n  categories,\n  averageTransaction: (totalCredit + totalDebit) / (creditCount + debitCount) || 0\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1632,
+        1376
+      ],
+      "id": "3bbeee4e-69a4-43b8-b535-4f894dad856c",
+      "name": "Calculate Weekly Summary"
+    },
+    {
+      "parameters": {
+        "chatId": "1026132948",
+        "text": "=📊 Weekly Financial Report\n📅 Period: {{ $json.weekStart }} to {{ $json.weekEnd }}\n\n💰 SUMMARY:\n• Total Received: NGN {{ $json.totalCredit.toLocaleString() }} ({{ $json.creditCount }} transactions)\n• Total Spent: NGN {{ $json.totalDebit.toLocaleString() }} ({{ $json.debitCount }} transactions)\n• Net Flow: NGN {{ $json.netFlow.toLocaleString() }}\n• Average Transaction: NGN {{ $json.averageTransaction.toFixed(2) }}\n\n📈 EXPENSES: NGN {{ $json.totalExpenses.toLocaleString() }}\n\n📊 CATEGORY BREAKDOWN:\n{{ Object.entries($json.categories).map(([cat, data]) => `• ${cat}: NGN ${data.amount.toLocaleString()} (${data.count} transactions)`).join('\\n') }}\n\n🔢 Total Transactions: {{ $json.totalTransactions }}",
+        "additionalFields": {
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -1408,
+        1376
+      ],
+      "id": "10e8723c-ba7e-4a66-befb-4118dcc43497",
+      "name": "Send Weekly Report",
+      "webhookId": "84a50ad1-c786-444d-8523-58e53584e622"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1CfREeD91_aTdVfjxxwoHJMfIxGuohdTU454k86paML4",
+          "mode": "list",
+          "cachedResultName": "TRans Analy",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CfREeD91_aTdVfjxxwoHJMfIxGuohdTU454k86paML4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Weekly_Reports",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.4,
+      "position": [
+        -1200,
+        1376
+      ],
+      "id": "281edad7-2e7f-4f4d-9449-2cf01c98a828",
+      "name": "Save Weekly Report"
+    },
+    {
+      "parameters": {
+        "content": "## Transaction Processing Pipeline\n\n✅ Error handling enabled\n✅ Filters debit/credit only\n✅ Confidence threshold: 70%\n✅ Google Sheets integration\n✅ Weekly reports",
+        "height": 300,
+        "width": 400
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2208,
+        1696
+      ],
+      "typeVersion": 1,
+      "id": "0d22d3a6-3c9a-48a2-9392-c74c8695ac31",
+      "name": "Main Pipeline Notes"
+    },
+    {
+      "parameters": {
+        "content": "## Weekly Reports\n\n📅 Runs every Monday at 9 AM\n📊 Calculates weekly summary\n📱 Sends Telegram report\n💾 Saves to Google Sheets",
+        "height": 200,
+        "width": 350
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2240,
+        1296
+      ],
+      "typeVersion": 1,
+      "id": "3dcc460f-e942-47d8-b675-72923277fd25",
+      "name": "Weekly Report Notes"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "condition1",
+              "leftValue": "={{ $json.subject }}",
+              "rightValue": "Transfer Successful",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "239a34dd-2bb1-47bc-8ee6-d674f5d5b56f",
+      "name": "Filter Bank Messages2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -1552,
+        1792
+      ]
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {
+          "q": "Transfer Successful"
+        },
+        "options": {}
+      },
+      "id": "f10685f8-4143-4e08-810a-3c5baad3e756",
+      "name": "Gmail Trigger4",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1952,
+        1744
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 30,
+        "simple": false,
+        "filters": {
+          "q": "transfer successful"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -1728,
+        1792
+      ],
+      "id": "7ce04890-903f-4069-8477-a256bf52ed35",
+      "name": "Get many messages2",
+      "webhookId": "a2059580-3971-4f46-b594-12e8b08b3b70",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a banking transaction analyzer. Analyze the following banking message and extract transaction details in JSON format.\nmessage: {{ $json.textAsHtml }}\n\nExtract the following information and return ONLY a valid JSON object:\n{\n  \"transactionType\": \"credit\" or \"debit\",\n  \"amount\": numeric_value_only,\n  \"currency\": \"NGN\" or detected currency,\n  \"status\": \"completed\", \"pending\", \"failed\", or \"processing\",\n  \"name\":  \"the name\",\n  \"category\": \"earnings\", \"spending\", or \"pending\",\n  \"extractedDate\": \"YYYY-MM-DD format if found in message\",\n  \"confidence\": 0.0 to 1.0 confidence score,\n  \"isTransaction\": true or false\n  \"transactionId\": \"transaction no\"\n  \"transferedTo\": \"account no\"\n}\n\nRules:\n- Credit = money received (earnings)\n- Debit = money sent/spent (spending)\n- Pending = any unconfirmed transactions\n- Amount should be numeric only (no currency symbols)\n- If not a transaction, set isTransaction to false\n- Be very accurate with transaction type detection\n- Transaction ID = the Transaction No Should be numeric\n- Transfered To = this will be the account number i sent money to",
+        "hasOutputParser": true,
+        "needsFallback": true,
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        -1264,
+        1792
+      ],
+      "id": "fb1edd49-06bc-4a07-821e-519323c4541e",
+      "name": "Basic LLM Chain 5",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "chatId": "1026132948",
+        "text": "=💰 Transaction Alert\n\n🔄 Type: {{ $json.output?.transactionType || 'Unknown' }}\n💵 Amount: {{ $json.output?.currency || 'NGN' }} {{ $json.output?.amount || 0 }}\n📝 Description: {{ $json.output?.description || 'No description' }}\n📅 Date: {{ $json.output?.extractedDate || 'Unknown date' }}\n✅ Status: {{ $json.output?.status || 'Unknown' }}\n📊 Category: {{ $json.output?.category || 'Unknown' }}\n🎯 Confidence: {{ Math.round(($json.output?.confidence || 0) * 100) }}%",
+        "replyMarkup": "forceReply",
+        "forceReply": {},
+        "additionalFields": {
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -576,
+        1744
+      ],
+      "id": "a0921268-e573-44b0-8ba1-4be6fc3c3c92",
+      "name": "Send Transaction Alert2",
+      "webhookId": "55d7eaf5-8f23-4d06-8490-f40dd7b8566b",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1CfREeD91_aTdVfjxxwoHJMfIxGuohdTU454k86paML4",
+          "mode": "list",
+          "cachedResultName": "TRans Analy",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CfREeD91_aTdVfjxxwoHJMfIxGuohdTU454k86paML4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Transactions",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CfREeD91_aTdVfjxxwoHJMfIxGuohdTU454k86paML4/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Date": "={{ $('Format Transaction Data').item.json.output.extractedDate }}",
+            "Transaction Type": "={{ $('Format Transaction Data').item.json.output.transactionType }}",
+            "Amount": "={{ $('Format Transaction Data').item.json.output.amount }}",
+            "Currency": "={{ $('Format Transaction Data').item.json.output.currency }}",
+            "Status": "={{ $('Format Transaction Data').item.json.output.status }}",
+            "Description": "={{ $('Format Transaction Data').item.json.output.description }}",
+            "Category": "={{ $('Format Transaction Data').item.json.output.category }}",
+            "Confidence": "={{ $('Format Transaction Data').item.json.output.confidence }}",
+            "Account No": "={{ $('Format Transaction Data').item.json.output.transferredTo }}",
+            "Tansaction No\t": "={{ $('Format Transaction Data').item.json.output.transactionId }}"
+          },
+          "matchingColumns": [
+            "Date"
+          ],
+          "schema": [
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Transaction Type",
+              "displayName": "Transaction Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Amount",
+              "displayName": "Amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Currency",
+              "displayName": "Currency",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Category",
+              "displayName": "Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Confidence",
+              "displayName": "Confidence",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tansaction No\t",
+              "displayName": "Tansaction No\t",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Account No",
+              "displayName": "Account No",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -272,
+        1744
+      ],
+      "id": "0d4c8997-c538-4d45-bc0e-552dc48d7d73",
+      "name": "Append or update row in sheet"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemma-3-12b-it",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1280,
+        2016
+      ],
+      "id": "31042392-f183-4ece-b5a7-6d871033b32c",
+      "name": "Model Fallback"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemma-3-12b-it",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -944,
+        2256
+      ],
+      "id": "a43c69e3-25c5-4117-8191-6023b645ece2",
+      "name": "Model Fallback1"
     }
   ],
   "pinData": {},
@@ -1125,11 +1907,22 @@
         ]
       ]
     },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Telegram1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Google Gemini Chat Model6": {
       "ai_languageModel": [
         [
           {
-            "node": "Agent D",
+            "node": "AI Agent1",
             "type": "ai_languageModel",
             "index": 0
           }
@@ -1140,7 +1933,7 @@
       "ai_memory": [
         [
           {
-            "node": "Agent D",
+            "node": "AI Agent1",
             "type": "ai_memory",
             "index": 0
           }
@@ -1151,7 +1944,7 @@
       "ai_tool": [
         [
           {
-            "node": "Agent D",
+            "node": "AI Agent1",
             "type": "ai_tool",
             "index": 0
           }
@@ -1173,7 +1966,7 @@
       "ai_tool": [
         [
           {
-            "node": "Agent D",
+            "node": "AI Agent1",
             "type": "ai_tool",
             "index": 0
           }
@@ -1184,7 +1977,7 @@
       "ai_tool": [
         [
           {
-            "node": "Agent D",
+            "node": "AI Agent1",
             "type": "ai_tool",
             "index": 0
           }
@@ -1195,7 +1988,7 @@
       "main": [
         [
           {
-            "node": "Agent D",
+            "node": "AI Agent1",
             "type": "main",
             "index": 0
           }
@@ -1206,7 +1999,7 @@
       "ai_tool": [
         [
           {
-            "node": "Agent D",
+            "node": "AI Agent1",
             "type": "ai_tool",
             "index": 0
           }
@@ -1228,7 +2021,7 @@
       "ai_outputParser": [
         [
           {
-            "node": "Agent D",
+            "node": "AI Agent1",
             "type": "ai_outputParser",
             "index": 0
           }
@@ -1250,7 +2043,7 @@
       "ai_tool": [
         [
           {
-            "node": "Agent D",
+            "node": "AI Agent1",
             "type": "ai_tool",
             "index": 0
           }
@@ -1261,7 +2054,7 @@
       "ai_tool": [
         [
           {
-            "node": "Agent D",
+            "node": "AI Agent1",
             "type": "ai_tool",
             "index": 0
           }
@@ -1272,7 +2065,7 @@
       "ai_tool": [
         [
           {
-            "node": "Agent D",
+            "node": "AI Agent1",
             "type": "ai_tool",
             "index": 0
           }
@@ -1283,7 +2076,7 @@
       "ai_tool": [
         [
           {
-            "node": "Agent D",
+            "node": "AI Agent1",
             "type": "ai_tool",
             "index": 0
           }
@@ -1294,7 +2087,7 @@
       "ai_tool": [
         [
           {
-            "node": "Agent D",
+            "node": "AI Agent1",
             "type": "ai_tool",
             "index": 0
           }
@@ -1327,7 +2120,7 @@
       "ai_tool": [
         [
           {
-            "node": "Agent D",
+            "node": "AI Agent1",
             "type": "ai_tool",
             "index": 0
           }
@@ -1338,7 +2131,7 @@
       "ai_tool": [
         [
           {
-            "node": "Agent D",
+            "node": "AI Agent1",
             "type": "ai_tool",
             "index": 0
           }
@@ -1349,22 +2142,280 @@
       "ai_tool": [
         [
           {
-            "node": "Agent D",
+            "node": "AI Agent1",
             "type": "ai_tool",
             "index": 0
           }
         ]
       ]
     },
-    "Agent D": {
+    "Filter Bank Messages": {
       "main": [
         [
           {
-            "node": "Telegram1",
+            "node": "Basic LLM Chain 3",
             "type": "main",
             "index": 0
           }
         ]
+      ]
+    },
+    "Gmail Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Get many messages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain ": {
+      "main": [
+        [
+          {
+            "node": "Send a text message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain ",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain ",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many messages": {
+      "main": [
+        [
+          {
+            "node": "Filter Bank Messages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain 3": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model8": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain 3",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser4": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain 3",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Transaction Data": {
+      "main": [
+        [
+          {
+            "node": "Send Transaction Alert2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model 2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain 5",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Content Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain 5",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Weekly Report Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Weekly Transactions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Weekly Transactions": {
+      "main": [
+        [
+          {
+            "node": "Calculate Weekly Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate Weekly Summary": {
+      "main": [
+        [
+          {
+            "node": "Send Weekly Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Weekly Report": {
+      "main": [
+        [
+          {
+            "node": "Save Weekly Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Bank Messages2": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain 5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Trigger4": {
+      "main": [
+        [
+          {
+            "node": "Get many messages2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many messages2": {
+      "main": [
+        [
+          {
+            "node": "Filter Bank Messages2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain 5": {
+      "main": [
+        [
+          {
+            "node": "Format Transaction Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Transaction Alert2": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Model Fallback": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain 5",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Model Fallback1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Content Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        []
       ]
     }
   },
@@ -1372,11 +2423,10 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "fa4391d3-0351-4490-b1dc-c99b5349907b",
+  "versionId": "4ccaa702-89f5-40ef-9368-f84d388ebe5f",
   "meta": {
-    "templateCredsSetupCompleted": true,
-    "instanceId": "d18a685202122e5217e8c48a9b4551dac3f6ca116b509e997890180d64191b4d"
+    "instanceId": "8d0680c4eee75276f104fe2b253dd4a6fe12b529dee7ac6dcb1dda00b9540fc7"
   },
-  "id": "NBcIjUOnGF5aOEt3",
+  "id": "NT5rCc7LmECekgB2",
   "tags": []
 }
