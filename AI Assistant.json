@@ -1,0 +1,1382 @@
+{
+  "name": "AI Assistant",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=#### INSTRUCTIONS\nExtract the content from the following HTML\n\n##### DATA\n {{ $json.html }}",
+        "hasOutputParser": true,
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        -1024,
+        -3312
+      ],
+      "id": "b0821677-13c9-400b-bfbc-76f96100184f",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1040,
+        -2944
+      ],
+      "id": "d14eeea7-e6bd-4c32-bef9-e3fa973f10ad",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "SqJ43awYgO5zo9p6",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n    \"content\": \"put extracted content here...\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        -864,
+        -2976
+      ],
+      "id": "6c5ef690-3b5f-49e0-9740-e78bd360dd9c",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=##### INSTRUCTIONS\nYou are Automate Community Pro assistant. You will communicating directly with the company team via Telegram Messages.\n\nYour task now is to review an given email content and create a summary in this EXACT format:\n```\n📧 NEW EMAIL!\n\n👤 From: [Sender Name] <[Sender address]>\n📝 Email Summary\n[Email Summary here]\n✅ Key Points\n[bullet list of the most important things from the email]\n📋 Suggested Tasks\n[If appropriate create a bullet list of suggested follow-up task based on the email content]\n```\n\nThe output message will be sent via Telegram and MUST be formatted following the specific Telegram's HTML standards described here:\n\"\"\"DOCS\nTo use this mode, pass HTML in the parse_mode field. The following tags are currently supported:\n```\n<b>bold</b>, <strong>bold</strong>\n<i>italic</i>, <em>italic</em>\n<u>underline</u>, <ins>underline</ins>\n<s>strikethrough</s>, <strike>strikethrough</strike>, <del>strikethrough</del>\n<span class=\"tg-spoiler\">spoiler</span>, <tg-spoiler>spoiler</tg-spoiler>\n<b>bold <i>italic bold <s>italic bold strikethrough <span class=\"tg-spoiler\">italic bold strikethrough spoiler</span></s> <u>underline italic bold</u></i> bold</b>\n<a href=\"http://www.example.com/\">inline URL</a>\n<a href=\"tg://user?id=123456789\">inline mention of a user</a>\n<tg-emoji emoji-id=\"5368324170671202286\">👍</tg-emoji>\n<code>inline fixed-width code</code>\n<pre>pre-formatted fixed-width code block</pre>\n<pre><code class=\"language-python\">pre-formatted fixed-width code block written in the Python programming language</code></pre>\n<blockquote>Block quotation started\\nBlock quotation continued\\nThe last line of the block quotation</blockquote>\n<blockquote expandable>Expandable block quotation started\\nExpandable block quotation continued\\nExpandable block quotation continued\\nHidden by default part of the block quotation started\\nExpandable block quotation continued\\nThe last line of the block quotation</blockquote>\n```\n\nPlease Note:\n- Only the tags mentioned above are currently supported.\n- All <, > and & symbols that are not a part of a tag or an HTML entity must be replaced with the corresponding HTML entities (< with &lt;, > with &gt; and & with &amp;).\n- All numerical HTML entities are supported.\n- The API currently supports only the following named HTML entities: &lt;, &gt;, &amp; and &quot;.\n- Use nested pre and code tags, to define programming language for pre entity.\n- Programming language can't be specified for standalone code tags.\n- A valid emoji must be used as the content of the tg-emoji tag. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the emoji field of the custom emoji sticker.\n\"\"\"\n\n##### INPUT\n{{ JSON.stringify($json.data) }}",
+        "hasOutputParser": true,
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        -480,
+        -3312
+      ],
+      "id": "446675d2-4ca1-4258-8c5d-2df69278cd72",
+      "name": "Basic LLM Chain 2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "71876e29-d823-47b6-8d6c-568a9b5bbb34",
+              "name": "=data.content",
+              "value": "={{ $json.output.content }}",
+              "type": "string"
+            },
+            {
+              "id": "db73dc63-d80b-4f19-aaca-440e20ea5637",
+              "name": "data.from.address",
+              "value": "={{ $('Get a message').item.json.from.value[0].address }}",
+              "type": "string"
+            },
+            {
+              "id": "2ea68682-cf05-43cb-ada4-4040220a1b8a",
+              "name": "data.from.subject",
+              "value": "={{ $('Get a message').item.json.headers.subject }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -704,
+        -3312
+      ],
+      "id": "e7ba7c06-8aba-429b-8de6-30ad400db62c",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        -2976
+      ],
+      "id": "cb4184a7-3016-4539-9955-91d4055bf67e",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "SqJ43awYgO5zo9p6",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"output\": \"put the created message here\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        -304,
+        -2912
+      ],
+      "id": "253ec4d5-8bb6-454e-aed7-d5343afebadd",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "content": "## New Mail Incoming",
+        "height": 220
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1424,
+        -3376
+      ],
+      "typeVersion": 1,
+      "id": "af2b50c5-3ce5-4969-bfc5-3b7bd9387f98",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Review Email Data",
+        "height": 320,
+        "width": 420,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1072,
+        -3104
+      ],
+      "typeVersion": 1,
+      "id": "0b66996b-9a1b-4b65-a215-477c0e4e8013",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## Evaluate Potential Followups",
+        "height": 320,
+        "width": 460,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -576,
+        -3136
+      ],
+      "typeVersion": 1,
+      "id": "870c95d8-e7f7-4cf1-af97-6642a5614a9f",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "## Notify",
+        "height": 220,
+        "width": 150,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -96,
+        -3392
+      ],
+      "typeVersion": 1,
+      "id": "3d1b9d7f-e29e-40b2-ab46-d3f0460c48e8",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "messageId": "={{ $json.id }}",
+        "simple": false,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -1152,
+        -3312
+      ],
+      "id": "926a425b-5e9b-46bf-95b5-b702434f52d3",
+      "name": "Get a message",
+      "webhookId": "a2059580-3971-4f46-b594-12e8b08b3b70",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "DZCYUAPCO1AnajlE",
+          "name": "Gmail account "
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "=1026132948",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -80,
+        -3312
+      ],
+      "id": "f1697d54-25ca-4dbe-a0b4-caf7cd34c945",
+      "name": "Send a text message",
+      "webhookId": "d291273b-7742-476a-863f-ad2ce0f7feb0",
+      "credentials": {
+        "telegramApi": {
+          "id": "tOy7ib2DpzhLNTTe",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1312,
+        -3328
+      ],
+      "id": "66c1ff83-83d9-404b-b732-9a98f36e7ac3",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "DZCYUAPCO1AnajlE",
+          "name": "Gmail account "
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -3104,
+        -2128
+      ],
+      "id": "31dcd29a-ec41-4ac4-a1ec-67752e97e0a3",
+      "name": "Schedule Trigger [24H]"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=##### INSTRUCTIONS\nYou are Automate Community Pro task manager assistant. You will communicating directly with the company team via Telegram Messages and create a daily update message about ongoing ttasks.\n\nYou will create a daily message which will be sent every morning at 9:00 AM which will recap all the tasks which still needs to be completed.\n\nfollow this EXACT format:\n```\n☀️ Daily Update [Current Date]\n\n➡️ Current Tasks\n[Here insert a bullet list of current uncompleted tasks, order them from the most urgent one to least urgent (based on due date)]\n\n👩🏻‍💻 [Here you will insert a concise message of what to do today based on the tasks which needs to be done, use max 4/5 sentences and a nice, polite professional tone. End the message with an orginal phylosophical food for thoughts.]\n```\n\nThe output message will be sent via Telegram and MUST be formatted following the specific Telegram's HTML standards described here:\n\"\"\"DOCS\nTo use this mode, pass HTML in the parse_mode field. The following tags are currently supported:\n```\n<b>bold</b>, <strong>bold</strong>\n<i>italic</i>, <em>italic</em>\n<u>underline</u>, <ins>underline</ins>\n<s>strikethrough</s>, <strike>strikethrough</strike>, <del>strikethrough</del>\n<span class=\"tg-spoiler\">spoiler</span>, <tg-spoiler>spoiler</tg-spoiler>\n<b>bold <i>italic bold <s>italic bold strikethrough <span class=\"tg-spoiler\">italic bold strikethrough spoiler</span></s> <u>underline italic bold</u></i> bold</b>\n<a href=\"http://www.example.com/\">inline URL</a>\n<a href=\"tg://user?id=123456789\">inline mention of a user</a>\n<tg-emoji emoji-id=\"5368324170671202286\">👍</tg-emoji>\n<code>inline fixed-width code</code>\n<pre>pre-formatted fixed-width code block</pre>\n<pre><code class=\"language-python\">pre-formatted fixed-width code block written in the Python programming language</code></pre>\n<blockquote>Block quotation started\\nBlock quotation continued\\nThe last line of the block quotation</blockquote>\n<blockquote expandable>Expandable block quotation started\\nExpandable block quotation continued\\nExpandable block quotation continued\\nHidden by default part of the block quotation started\\nExpandable block quotation continued\\nThe last line of the block quotation</blockquote>\n```\n\nPlease Note:\n- Only the tags mentioned above are currently supported.\n- All <, > and & symbols that are not a part of a tag or an HTML entity must be replaced with the corresponding HTML entities (< with &lt;, > with &gt; and & with &amp;).\n- All numerical HTML entities are supported.\n- The API currently supports only the following named HTML entities: &lt;, &gt;, &amp; and &quot;.\n- Use nested pre and code tags, to define programming language for pre entity.\n- Programming language can't be specified for standalone code tags.\n- A valid emoji must be used as the content of the tg-emoji tag. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the emoji field of the custom emoji sticker.\n\"\"\"\n\n##### INPUT\nCurrent Date: {{ $now.format('yyyy-MM-dd') }}\n{{ JSON.stringify($json.tasks)}}",
+        "hasOutputParser": true,
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        -2320,
+        -2128
+      ],
+      "id": "263569e2-a8c9-4fcf-b0c2-bb8d1dce394e",
+      "name": "Basic LLM Chain2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -2352,
+        -1984
+      ],
+      "id": "a825fc0a-13d3-4046-942e-fff9daf3ef9c",
+      "name": "Google Gemini Chat Model5",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "SqJ43awYgO5zo9p6",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n    \"message\": \"put generate message here....\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        -2192,
+        -1984
+      ],
+      "id": "d995b2d3-8cfc-4166-b3b8-919dfa511994",
+      "name": "Structured Output Parser5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3a80a185-d8b6-4bb3-bbb8-baf6da58dce1",
+              "name": "task.title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "974cb875-9c52-428c-b24b-7bd780963346",
+              "name": "task.notes",
+              "value": "={{ $json.notes }}",
+              "type": "string"
+            },
+            {
+              "id": "db1fcb16-d8b4-465f-bde9-e300218aa957",
+              "name": "task.status",
+              "value": "={{ $json.status }}",
+              "type": "string"
+            },
+            {
+              "id": "835350c2-66d4-46a5-9873-2999d0ffb242",
+              "name": "task.due",
+              "value": "={{ $json.due }}",
+              "type": "string"
+            },
+            {
+              "id": "60b2af5c-5a5d-47e4-917b-39524e36dd9f",
+              "name": "task.links",
+              "value": "={{ $json.links }}",
+              "type": "string"
+            },
+            {
+              "id": "4a75fea4-d25d-4ac5-852b-deb1f2275298",
+              "name": "task.ID",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2704,
+        -2128
+      ],
+      "id": "7c8e94da-6e6b-4240-8b1c-3b1c2b9fa436",
+      "name": "Edit Fields "
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "task",
+              "renameField": true,
+              "outputFieldName": "tasks"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -2560,
+        -2128
+      ],
+      "id": "10fdd284-a7a4-44c1-81f1-42b471f87746",
+      "name": "Aggregate 3"
+    },
+    {
+      "parameters": {
+        "chatId": "=1026132948",
+        "text": "={{ $json.output.message }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -1984,
+        -2128
+      ],
+      "id": "04ab613c-64e8-4e78-b5e3-4bd5eb348adf",
+      "name": "Telegram 1",
+      "webhookId": "aa9a10bd-eeae-41d9-8da3-a3687b4a2eb2",
+      "credentials": {
+        "telegramApi": {
+          "id": "tOy7ib2DpzhLNTTe",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -2752,
+        -3184
+      ],
+      "id": "1fa38e7a-9299-4dd3-bb50-8bbfacb5ef75",
+      "name": "Google Gemini Chat Model6"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "contextWindowLength": 50
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        -2624,
+        -3184
+      ],
+      "id": "146ace6a-0028-43f1-8aeb-642cf73c7ce1",
+      "name": "Postgres Chat Memory"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolName": "company_knowledge_base",
+        "toolDescription": "Retrieve Documents (pieces of full documents) Data from Company Knowledge base Vector Store",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "topK": 10,
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.1,
+      "position": [
+        -2992,
+        -2784
+      ],
+      "id": "301bf215-e69c-47ac-8829-20b8f91dd59f",
+      "name": "Supabase Vector Store1"
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-large",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -2496,
+        -3184
+      ],
+      "id": "f7ea8d21-ef33-428c-acca-2acecac976d9",
+      "name": "Embeddings OpenAI1"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        -2224,
+        -2608
+      ],
+      "id": "ee8c0ce0-0fb7-449e-a6c6-2f84df286dd2",
+      "name": "Calculator"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Get all events in Google Calendar (1 Week Time window)",
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "paoloanzani@automatecommunity.pro",
+          "mode": "list",
+          "cachedResultName": "paoloanzani@automatecommunity.pro"
+        },
+        "returnAll": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -2096,
+        -2608
+      ],
+      "id": "bc044bba-d5e5-46e9-bc2f-e732347520ad",
+      "name": "Google Calendar"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b3858ab9-9f05-4505-92b0-b6409ee85f4c",
+              "name": "userMessage.first_name",
+              "value": "={{ $json.message.from.first_name }}",
+              "type": "string"
+            },
+            {
+              "id": "a9b22d3f-b157-4519-898a-e60eeba51029",
+              "name": "userMessage.username",
+              "value": "={{ $json.message.from.username }}",
+              "type": "string"
+            },
+            {
+              "id": "accd287b-c8ae-459f-b8c0-98a9d1151e0f",
+              "name": "userMessage.content",
+              "value": "={{ $json.message.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2960,
+        -3312
+      ],
+      "id": "6c79bc3d-c4d3-41c5-b066-94710e2c9231",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output.message }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -2064,
+        -3312
+      ],
+      "id": "5cd7a7aa-d620-46a7-9b32-69de81bd86d9",
+      "name": "Telegram1",
+      "webhookId": "92e0da79-e925-483c-9099-a4fc2b0052ec"
+    },
+    {
+      "parameters": {
+        "description": "Get the current time (CEST - UTC +2)",
+        "jsCode": "const currentDateTimeUTCPlus2 = new Date().toLocaleString('en-US', {\n  year: 'numeric',\n  month: '2-digit',\n  day: '2-digit',\n  hour: '2-digit',\n  minute: '2-digit',\n  second: '2-digit',\n  hour12: false, // Use 24-hour format\n  timeZone: 'Europe/Rome' // Or 'Europe/Berlin', 'Europe/Paris', etc. for UTC+2 during summer\n});\n\nreturn currentDateTimeUTCPlus2"
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.2,
+      "position": [
+        -1984,
+        -2608
+      ],
+      "id": "47b840ff-719a-4ae2-ab92-ba6e3f287d5a",
+      "name": "Code Tool"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"Message Object\",\n  \"description\": \"Schema for a simple message object containing a text message.\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"message\": {\n      \"type\": \"string\",\n      \"description\": \"The text content of the message.\"\n    }\n  },\n  \"required\": [\n    \"message\"\n  ],\n  \"additionalProperties\": false\n}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        -1680,
+        -2912
+      ],
+      "id": "c557b43d-e44b-47cb-bbeb-814b489bfe87",
+      "name": "Structured Output Parser6"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserAutofixing",
+      "typeVersion": 1,
+      "position": [
+        -1984,
+        -3072
+      ],
+      "id": "4c209e58-afab-46b2-915b-f5f80bfe6bbf",
+      "name": "Auto-fixing Output Parser"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1840,
+        -2912
+      ],
+      "id": "940ca50a-8aa4-4394-936f-a7ede2ce6b54",
+      "name": "Google Gemini Chat Model7"
+    },
+    {
+      "parameters": {
+        "content": "## AI Assitant Trigger\n- Use @get_id_bot to get your chat id",
+        "height": 240,
+        "width": 330,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3184,
+        -3392
+      ],
+      "typeVersion": 1,
+      "id": "76307212-5094-4105-a083-e8f1afe81942",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "## Agent Core\n- **Customize Prompt Details Here**",
+        "height": 240,
+        "width": 350,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2464,
+        -3392
+      ],
+      "typeVersion": 1,
+      "id": "76e5b099-071d-4aaf-87f6-5d9a3dd4c0dd",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "## Send Created Message",
+        "height": 240,
+        "width": 190,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2096,
+        -3392
+      ],
+      "typeVersion": 1,
+      "id": "5b1804c8-5a7e-4f19-8ce0-19299d7cb887",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "## Daily Trigger (24H)",
+        "height": 220,
+        "width": 260,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3184,
+        -2208
+      ],
+      "typeVersion": 1,
+      "id": "67fa6d65-0003-4ad5-89f8-7717c7600a70",
+      "name": "Sticky Note18"
+    },
+    {
+      "parameters": {
+        "content": "## Get Ongoing Tasks",
+        "height": 220,
+        "width": 400
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2832,
+        -2192
+      ],
+      "typeVersion": 1,
+      "id": "2a2b2e52-960f-496f-af9a-ee3425e30e2f",
+      "name": "Sticky Note19"
+    },
+    {
+      "parameters": {
+        "content": "## Create Daily TODO Message",
+        "height": 360,
+        "width": 380,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2400,
+        -2192
+      ],
+      "typeVersion": 1,
+      "id": "6b9d734b-a2e2-4414-9422-2454521b648a",
+      "name": "Sticky Note20"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {
+          "chatIds": "=1026132948"
+        }
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -3136,
+        -3312
+      ],
+      "id": "f93db65e-50bf-485a-87f1-3b392b9af550",
+      "name": "Telegram Trigger",
+      "webhookId": "7a0e571b-9b2d-4aa1-b989-f18c0ca0313c"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Send a message in Gmail",
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        -2672,
+        -2736
+      ],
+      "id": "7f960eb0-e2a1-41be-85c4-9c5cea260c02",
+      "name": "Send a message in Gmail",
+      "webhookId": "a2f8dc5c-51b3-42c9-9b7a-eae9b7d55dc3"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Download a file from Google Drive by ID",
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('File', ``, 'string') }}"
+        },
+        "options": {
+          "binaryPropertyName": "data",
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "text/plain",
+              "slidesToFormat": "application/pdf"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleDriveTool",
+      "typeVersion": 3,
+      "position": [
+        -2352,
+        -2784
+      ],
+      "id": "d27c130e-a27e-48f7-acbd-5450584f34ba",
+      "name": "Download file in Google Drive"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Get N last messages in Gmail",
+        "operation": "getAll",
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        -2096,
+        -2912
+      ],
+      "id": "9f373353-c1c4-40ca-8834-849b8b515577",
+      "name": "Get many messages in Gmail",
+      "webhookId": "6241ddd3-b237-4f48-8a6d-e0303e3008a1"
+    },
+    {
+      "parameters": {
+        "task": "MTIzMDUzMzgyMTg3Mjk1MTExNTk6MDow",
+        "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Title', ``, 'string') }}",
+        "additionalFields": {
+          "dueDate": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Due_Date', ``, 'string') }}",
+          "notes": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Notes', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleTasksTool",
+      "typeVersion": 1,
+      "position": [
+        -2560,
+        -2736
+      ],
+      "id": "ef0af79c-e943-454e-913a-9b6147d3e8cd",
+      "name": "Create a task in Google Tasks"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Update a task in Google Tasks",
+        "operation": "update",
+        "task": "MTIzMDUzMzgyMTg3Mjk1MTExNTk6MDow",
+        "taskId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Task_ID', ``, 'string') }}",
+        "updateFields": {
+          "dueDate": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Due_Date', ``, 'string') }}",
+          "notes": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Notes', ``, 'string') }}",
+          "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Title', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleTasksTool",
+      "typeVersion": 1,
+      "position": [
+        -1984,
+        -2768
+      ],
+      "id": "aa718877-8e68-4977-a732-c5828d3441ca",
+      "name": "Update a task in Google Tasks1"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "task": "MTIzMDUzMzgyMTg3Mjk1MTExNTk6MDow",
+        "returnAll": true,
+        "additionalFields": {
+          "showCompleted": false
+        }
+      },
+      "type": "n8n-nodes-base.googleTasks",
+      "typeVersion": 1,
+      "position": [
+        -2816,
+        -2128
+      ],
+      "id": "a770f406-13de-4c7d-8283-749fb217914a",
+      "name": "Get many tasks",
+      "credentials": {
+        "googleTasksOAuth2Api": {
+          "id": "nLsINibs4XdYUNaw",
+          "name": "Google Tasks account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "task": "MTIzMDUzMzgyMTg3Mjk1MTExNTk6MDow",
+        "returnAll": true,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleTasksTool",
+      "typeVersion": 1,
+      "position": [
+        -2464,
+        -2608
+      ],
+      "id": "74e9da44-298c-4853-bbf6-de24d06324a0",
+      "name": "Get many tasks in Google Tasks"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "task": "MTIzMDUzMzgyMTg3Mjk1MTExNTk6MDow",
+        "taskId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Task_ID', ``, 'string') }}"
+      },
+      "type": "n8n-nodes-base.googleTasksTool",
+      "typeVersion": 1,
+      "position": [
+        -2144,
+        -2768
+      ],
+      "id": "38706d41-405b-4b79-92a5-890abf84463c",
+      "name": "Get a task in Google Tasks"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "task": "MTIzMDUzMzgyMTg3Mjk1MTExNTk6MDow",
+        "taskId": "="
+      },
+      "type": "n8n-nodes-base.googleTasksTool",
+      "typeVersion": 1,
+      "position": [
+        -2352,
+        -2496
+      ],
+      "id": "21ce400a-96e4-44e6-9d9c-aa1ba48c3a2f",
+      "name": "Delete a task in Google Tasks"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ JSON.stringify($json.userMessage) }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=##### INSTRUCTIONS\nYou are Automate Community Pro Telegram assistant Chatbot. You will communicating directly with the company team via Telegram Messages.\n\nYou have access to different tools which let you perform the following operations:\n- Create/Update tasks\n- Read/Write & Send Emails\n- Get scheduled events from calendar\n- Access Company's Knowledge Base Vector Store for contextual information retrevial\n- Download file from company's Google Drive\n\nIMPORTANT:\n- When retrieving data from the vector storage, you will be receive back also with the metadata of each specific piece of data retrieved. This metadata will include a field called \"document_id\" which represent the document_id to which the retrieved piece of data belongs. This is a google drive file ID, when you retrieve data from the vector storage YOU MUST ALWAYS retrieve the full documents to which the retrieved pieces of text belongs. This way you will have a more cohmprehensive context available. NEVER RETRIEVE DATA FROM THE VECTOR STORAGE AND THEN NOT DOWNLOADING THE RIGHT DOCUMENT FROM GOOGLE DRIVE, NEVER DO THAT.\n\nYour task now is to act as an helpful internal company assistant based on user requests.\n\nYou will receive a message from the user as input and yyour goal is to:\n- execute the required action using tools based on the message content (might not be necessary to always perform an operation)\n- create a final message response to send to the user\n\nThe final output message will be sent via Telegram and MUST be formatted following the specific Telegram's HTML standards described here:\n\"\"\"DOCS\nTo use this mode, pass HTML in the parse_mode field. The following tags are currently supported:\n```\n<b>bold</b>, <strong>bold</strong>\n<i>italic</i>, <em>italic</em>\n<u>underline</u>, <ins>underline</ins>\n<s>strikethrough</s>, <strike>strikethrough</strike>, <del>strikethrough</del>\n<span class=\"tg-spoiler\">spoiler</span>, <tg-spoiler>spoiler</tg-spoiler>\n<b>bold <i>italic bold <s>italic bold strikethrough <span class=\"tg-spoiler\">italic bold strikethrough spoiler</span></s> <u>underline italic bold</u></i> bold</b>\n<a href=\"http://www.example.com/\">inline URL</a>\n<a href=\"tg://user?id=123456789\">inline mention of a user</a>\n<tg-emoji emoji-id=\"5368324170671202286\">👍</tg-emoji>\n<code>inline fixed-width code</code>\n<pre>pre-formatted fixed-width code block</pre>\n<pre><code class=\"language-python\">pre-formatted fixed-width code block written in the Python programming language</code></pre>\n<blockquote>Block quotation started\\nBlock quotation continued\\nThe last line of the block quotation</blockquote>\n<blockquote expandable>Expandable block quotation started\\nExpandable block quotation continued\\nExpandable block quotation continued\\nHidden by default part of the block quotation started\\nExpandable block quotation continued\\nThe last line of the block quotation</blockquote>\n```\n\nPlease Note:\n- Only the tags mentioned above are currently supported.\n- All <, > and & symbols that are not a part of a tag or an HTML entity must be replaced with the corresponding HTML entities (< with &lt;, > with &gt; and & with &amp;).\n- All numerical HTML entities are supported.\n- The API currently supports only the following named HTML entities: &lt;, &gt;, &amp; and &quot;.\n- Use nested pre and code tags, to define programming language for pre entity.\n- Programming language can't be specified for standalone code tags.\n- A valid emoji must be used as the content of the tg-emoji tag. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the emoji field of the custom emoji sticker.\n\"\"\"\n\nYou will be provided the user input message in the following format:\n```json\n{\n \"userMessage\": {\n       \"username\": \"username here\",\n       \"firstName\": \"user first Name if provided\",\n       \"content\": \"message content\"\n }\n}\n```\n\nAdditional Context\nCurrent Date {{ $now.format('yyyy-MM-dd') }}\nYour gender is Female"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -2400,
+        -3312
+      ],
+      "id": "a2380501-9db8-4781-8b21-477ba8a7609f",
+      "name": "Agent D",
+      "retryOnFail": false
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain 2": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain 2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain 2",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a message": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger [24H]": {
+      "main": [
+        [
+          {
+            "node": "Get many tasks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain2": {
+      "main": [
+        [
+          {
+            "node": "Telegram 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser5": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain2",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields ": {
+      "main": [
+        [
+          {
+            "node": "Aggregate 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate 3": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model6": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent D",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Agent D",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent D",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent D",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent D",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Agent D",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent D",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser6": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Auto-fixing Output Parser",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto-fixing Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Agent D",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model7": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Auto-fixing Output Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent D",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file in Google Drive": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent D",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many messages in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent D",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a task in Google Tasks": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent D",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a task in Google Tasks1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent D",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many tasks": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many tasks in Google Tasks": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent D",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a task in Google Tasks": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent D",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a task in Google Tasks": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent D",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent D": {
+      "main": [
+        [
+          {
+            "node": "Telegram1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "fa4391d3-0351-4490-b1dc-c99b5349907b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d18a685202122e5217e8c48a9b4551dac3f6ca116b509e997890180d64191b4d"
+  },
+  "id": "NBcIjUOnGF5aOEt3",
+  "tags": []
+}
